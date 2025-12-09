@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#007AFF">
+    <title>Create a Book</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1 class="header-title">Create a Book</h1>
+        <button class="settings-btn" onclick="openSettings()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="content">
+        <!-- Chat Tab -->
+        <section id="chat-section" class="tab-content active">
+            <div class="chat-container">
+                <div class="messages" id="messages">
+                    <div class="message ai-message">
+                        <div class="message-bubble">
+                            Willkommen bei Create a Book! 📚 Erzähl mir von deiner Buchidee, deinen Charakteren oder deiner Story. Ich analysiere automatisch alles und ordne es den entsprechenden Bereichen zu.
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-container">
+                    <textarea id="chat-input" placeholder="Beschreibe deine Idee, Charaktere oder Story..." rows="1"></textarea>
+                    <button class="send-btn" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Characters Tab -->
+        <section id="characters-section" class="tab-content">
+            <div class="section-header">
+                <h2>Charaktere</h2>
+                <span class="badge" id="character-count">0</span>
+            </div>
+            <div class="characters-list" id="characters-list">
+                <div class="empty-state">
+                    <div class="empty-icon">👤</div>
+                    <p>Noch keine Charaktere</p>
+                    <span>Beschreibe Charaktere im Chat und sie erscheinen hier automatisch.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Relationships Tab -->
+        <section id="relationships-section" class="tab-content">
+            <div class="section-header">
+                <h2>Beziehungen</h2>
+                <span class="badge" id="relationship-count">0</span>
+            </div>
+            <div class="relationships-list" id="relationships-list">
+                <div class="empty-state">
+                    <div class="empty-icon">🔗</div>
+                    <p>Noch keine Beziehungen</p>
+                    <span>Beschreibe Beziehungen zwischen Charakteren im Chat.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Tab -->
+        <section id="story-section" class="tab-content">
+            <div class="section-header">
+                <h2>Story</h2>
+            </div>
+            <div class="story-content" id="story-content">
+                <div class="empty-state">
+                    <div class="empty-icon">📖</div>
+                    <p>Noch keine Story-Elemente</p>
+                    <span>Erzähle deine Geschichte im Chat und sie wird hier zusammengefasst.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Tab Bar -->
+    <nav class="tab-bar">
+        <button class="tab-item active" data-tab="chat">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Chat</span>
+        </button>
+        <button class="tab-item" data-tab="characters">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Charaktere</span>
+        </button>
+        <button class="tab-item" data-tab="relationships">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span>Beziehungen</span>
+        </button>
+        <button class="tab-item" data-tab="story">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Story</span>
+        </button>
+    </nav>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Einstellungen</h2>
+                <button class="close-btn" onclick="closeSettings()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="settings-group">
+                    <h3>Allgemein</h3>
+                    <div class="setting-item">
+                        <span>Dunkelmodus</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <span>Automatische Analyse</span>
+                        <label class="toggle">
+                            <input type="checkbox" id="auto-analyze-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h3>Daten</h3>
+                    <button class="settings-btn-action" onclick="exportData()">Daten exportieren</button>
+                    <button class="settings-btn-action danger" onclick="clearAllData()">Alle Daten löschen</button>
+                </div>
+                <div class="settings-group">
+                    <h3>Über</h3>
+                    <p class="about-text">Create a Book v1.0<br>Eine App zum Organisieren deiner Buchideen.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Character Detail Modal -->
+    <div class="modal-overlay" id="character-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="character-modal-name">Charakter</h2>
+                <button class="close-btn" onclick="closeCharacterModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-content" id="character-modal-content">
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
